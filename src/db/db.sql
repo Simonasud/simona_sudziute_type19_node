@@ -26,3 +26,14 @@ CREATE TABLE shop_items (
   FOREIGN KEY (item_type_id) REFERENCES item_types(id)
 ) ENGINE=InnoDB;
 
+-- sukurti lentele - 'items_types'
+-- id, name
+CREATE TABLE item_types (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  name VARCHAR(255) NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+
+
+
