@@ -10,7 +10,7 @@
     "lintfr": "eslint front-end --fix"
   },
   "keywords": [],
-  "author": "Marius K.",
+  "author": "Simona S.",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
