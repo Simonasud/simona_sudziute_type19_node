@@ -34,6 +34,9 @@ CREATE TABLE item_types (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
+-- sukurti item_types
+INSERT INTO item_types (name) VALUES ('food'), ('drink'), ('electronic'), ('clothes');
+
 -- sukurti lentele - 'orders'
 -- id, user_id, shop_item_id, quantity. total_price, status
 CREATE TABLE orders (
