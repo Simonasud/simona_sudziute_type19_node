@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (response.ok) {
         // Jei prisijungimas pavyko, išsaugome duomenis į localStorage
         localStorage.setItem('userEmail', email);
-        localStorage.setItem('userRole', data.role); // Arba kitaip gauti vartotojo rolę iš duomenų
+        localStorage.setItem('userRole', data.role);
 
         // Nukreipiame į kitą puslapį
         window.location = 'shop.html';
