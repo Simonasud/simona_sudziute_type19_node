@@ -10,9 +10,6 @@ const validateFields = (requiredFields) => (req, res, next) => {
     }
   });
 
-  // Add custom validation logic if needed
-  // Example: check if email is valid, etc.
-
   if (missingFields.length > 0 || invalidFields.length > 0) {
     const errors = {};
 
