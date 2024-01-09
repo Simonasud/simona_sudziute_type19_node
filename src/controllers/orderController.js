@@ -64,4 +64,25 @@ async function getOrderById(req, res) {
   }
 }
 
-module.exports = { createOrder, getAllOrders, getOrderById };
+async function getOrdersByUserId(req, res) {
+  const userId = req.params.user_id;
+
+  const sql = `
+    SELECT orders.*, users.name AS user_name, shop_items.name AS item_name, shop_items.price AS item_price
+    FROM orders
+    JOIN users ON orders.user_id = users.id
+    JOIN shop_items ON orders.shop_item_id = shop_items.id
+    WHERE users.id = ?
+  `;
+
+  const [orders, error] = await dbQueryWithData(sql, [userId]);
+
+  if (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Failed to fetch orders' });
+  } else {
+    res.json({ success: true, orders });
+  }
+}
+
+module.exports = { createOrder, getAllOrders, getOrderById, getOrdersByUserId };

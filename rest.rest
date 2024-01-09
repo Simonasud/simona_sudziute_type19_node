@@ -57,7 +57,10 @@ Content-Type: application/json
 GET http://localhost:3000/api/orders
 
 ### single order
-http://localhost:3000/api/orders
+http://localhost:3000/api/orders/2
+
+### order by user
+http://localhost:3000/api/orders/user/:1
 
 
 
