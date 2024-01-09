@@ -34,6 +34,21 @@ CREATE TABLE item_types (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
+-- sukurti lentele - 'orders'
+-- id, user_id, shop_item_id, quantity. total_price, status
+CREATE TABLE orders (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  user_id INT NOT NULL,
+  shop_item_id INT NOT NULL,
+  quantity INT NOT NULL,
+  total_price DECIMAL(10, 2) NOT NULL,
+  status VARCHAR(255),
+  PRIMARY KEY (id),
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (shop_item_id) REFERENCES shop_items(id)
+) ENGINE=InnoDB;
+
+
 
 
 
