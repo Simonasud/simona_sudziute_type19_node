@@ -46,4 +46,24 @@ async function getAllShopItems(req, res) {
   }
 }
 
-module.exports = { createShopItem, getAllShopItems };
+async function getShopItemById(req, res) {
+  const itemId = req.params.id;
+
+  const sql = 'SELECT * FROM shop_items WHERE id = ?';
+  const [result, error] = await dbQueryWithData(sql, [itemId]);
+
+  if (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ success: false, message: 'Failed to fetch shop item' });
+  } else {
+    if (result.length === 0) {
+      res.status(404).json({ success: false, message: 'Shop item not found' });
+    } else {
+      res.json({ success: true, shopItem: result[0] });
+    }
+  }
+}
+
+module.exports = { createShopItem, getAllShopItems, getShopItemById };
