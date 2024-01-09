@@ -20,3 +20,16 @@ Content-Type: application/json
   "password": "your_password"
 }
 
+### Shop item
+POST http://localhost:3000/api/shop_items
+Content-Type: application/json
+
+{
+  "name": "Product Name",
+  "price": 29.99,
+  "description": "Product description goes here",
+  "image": "path/to/image.jpg",
+  "item_type_id": 1
+}
+
+
