@@ -66,4 +66,28 @@ async function getShopItemById(req, res) {
   }
 }
 
-module.exports = { createShopItem, getAllShopItems, getShopItemById };
+async function deleteShopItemById(req, res) {
+  const { id } = req.params;
+
+  const sql = 'DELETE FROM shop_items WHERE id = ?';
+  const [result, error] = await dbQueryWithData(sql, [id]);
+
+  if (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ success: false, message: 'Failed to delete shop item' });
+  } else {
+    if (result.affectedRows > 0) {
+      res.json({ success: true, message: 'Shop item deleted successfully' });
+    } else {
+      res.status(404).json({ success: false, message: 'Shop item not found' });
+    }
+  }
+}
+module.exports = {
+  createShopItem,
+  getAllShopItems,
+  getShopItemById,
+  deleteShopItemById,
+};

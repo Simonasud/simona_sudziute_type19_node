@@ -7,5 +7,6 @@ const shopItemsController = require('../controllers/shopItemsController');
 router.post('/shop_items', shopItemsController.createShopItem);
 router.get('/shop_items', shopItemsController.getAllShopItems);
 router.get('/shop_items/:id', shopItemsController.getShopItemById);
+router.delete('/shop_items/:id', shopItemsController.deleteShopItemById);
 
 module.exports = router;
