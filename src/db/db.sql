@@ -48,6 +48,13 @@ CREATE TABLE orders (
   FOREIGN KEY (shop_item_id) REFERENCES shop_items(id)
 ) ENGINE=InnoDB;
 
+-- sukurti lentele - 'user_roles
+-- id, name
+CREATE TABLE user_roles (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  name VARCHAR(255) NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB;
 
 
 
