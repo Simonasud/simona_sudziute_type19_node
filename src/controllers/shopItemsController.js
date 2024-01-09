@@ -28,4 +28,22 @@ async function createShopItem(req, res) {
   }
 }
 
-module.exports = { createShopItem };
+async function getAllShopItems(req, res) {
+  const sql = 'SELECT * FROM shop_items';
+  const [results, error] = await dbQueryWithData(sql);
+
+  if (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ success: false, message: 'Failed to fetch shop items' });
+  } else {
+    res.json({
+      success: true,
+      message: 'Shop items fetched successfully',
+      shopItems: results,
+    });
+  }
+}
+
+module.exports = { createShopItem, getAllShopItems };
