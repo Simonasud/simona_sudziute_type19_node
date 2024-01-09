@@ -48,4 +48,20 @@ async function getAllOrders(req, res) {
   }
 }
 
-module.exports = { createOrder, getAllOrders };
+async function getOrderById(req, res) {
+  const orderId = req.params.id;
+
+  const sql = 'SELECT * FROM orders WHERE id = ?';
+  const [order, error] = await dbQueryWithData(sql, [orderId]);
+
+  if (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Failed to fetch order' });
+  } else if (order.length === 0) {
+    res.status(404).json({ success: false, message: 'Order not found' });
+  } else {
+    res.json({ success: true, order: order[0] });
+  }
+}
+
+module.exports = { createOrder, getAllOrders, getOrderById };
