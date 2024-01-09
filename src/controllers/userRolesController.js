@@ -1,24 +1,41 @@
 // userRolesController.js
+// controllers/userController.js
+
 const { dbQueryWithData } = require('../helper');
 
-async function getAllUserRoles(req, res) {
-  const sql = 'SELECT * FROM user_roles';
+async function createUser(req, res) {
+  const { name, email, password, role } = req.body;
 
-  try {
-    const [roles, error] = await dbQueryWithData(sql);
-
-    if (error) {
-      console.error(error);
-      res
-        .status(500)
-        .json({ success: false, message: 'Failed to fetch user roles' });
-    } else {
-      res.json({ success: true, roles });
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: 'Internal Server Error' });
+  const emailExists = await isEmailExists(email);
+  if (emailExists) {
+    return res
+      .status(400)
+      .json({ success: false, message: 'Email is already in use' });
   }
+
+  const sql =
+    'INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)';
+  const [result, error] = await dbQueryWithData(sql, [
+    name,
+    email,
+    password,
+    role,
+  ]);
+
+  if (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ success: false, message: 'Failed to register user' });
+  }
+
+  res.json({ success: true, message: 'User registered successfully' });
 }
 
-module.exports = { getAllUserRoles };
+async function isEmailExists(email) {
+  const sql = 'SELECT COUNT(*) AS count FROM users WHERE email = ?';
+  const [result] = await dbQueryWithData(sql, [email]);
+  return result[0].count > 0;
+}
+
+module.exports = { createUser };
