@@ -11,3 +11,12 @@ Content-Type: application/json
   "role_id": 1
 }
 
+### Login User
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "john.doe@example.com",
+  "password": "your_password"
+}
+
