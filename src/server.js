@@ -6,6 +6,7 @@ const mysql = require('mysql2/promise');
 const { dbConfig } = require('./config');
 const authRouter = require('./routes/authRouter');
 const shopItemsRouter = require('./routes/shopItemsRouter');
+const ordersRouter = require('./routes/ordersRouter');
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/auth', authRouter);
 app.use('/api', shopItemsRouter);
+app.use('/api', ordersRouter);
 
 // 404 - returns json
 app.use((req, res) => {
