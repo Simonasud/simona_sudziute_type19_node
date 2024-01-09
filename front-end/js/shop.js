@@ -38,4 +38,29 @@ function deleteItem(itemId) {
     });
 }
 
-function fetchShopItems() {}
+function fetchShopItems() {
+  const shopItemsContainer = document.getElementById('shop-items');
+
+  fetch('http://localhost:3000/api/shop_items')
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.success) {
+        const shopItems = data.shopItems;
+        displayShopItems(shopItems);
+      } else {
+        console.error('Failed to fetch shop items:', data.message);
+      }
+    })
+    .catch((error) => {
+      console.error('Error fetching shop items:', error);
+    });
+
+  function displayShopItems(shopItems) {
+    shopItemsContainer.innerHTML = '';
+
+    shopItems.forEach((item) => {
+      const itemCard = createItemCard(item);
+      shopItemsContainer.appendChild(itemCard);
+    });
+  }
+}
