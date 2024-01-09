@@ -1,63 +1,45 @@
 // authController.js
-
-// Importuojami moduliai
 const { dbQueryWithData } = require('../helper');
 
-// Funkcija tikrinti vartotojo prisijungimo duomenis
-async function checkCredentials(email, password) {
-  const sql = 'SELECT * FROM users WHERE email = ? AND password = ?';
-  const [result, error] = await dbQueryWithData(sql, [email, password]);
+async function register(req, res) {
+  const { name, email, password, role_id } = req.body;
+
+  const emailExists = await isEmailTaken(email);
+  if (emailExists) {
+    return res
+      .status(400)
+      .json({ success: false, message: 'Email is already taken' });
+  }
+
+  const sql =
+    'INSERT INTO users (name, email, password, role_id) VALUES (?, ?, ?, ?)';
+  const [result, error] = await dbQueryWithData(sql, [
+    name,
+    email,
+    password,
+    role_id,
+  ]);
 
   if (error) {
     console.error(error);
-    return false;
+    return res
+      .status(500)
+      .json({ success: false, message: 'Failed to register user' });
   }
+
+  res.json({ success: true, message: 'User registered successfully' });
+}
+
+async function isEmailTaken(email) {
+  const sql = 'SELECT * FROM users WHERE email = ?';
+  const [result, error] = await dbQueryWithData(sql, [email]);
+
+  if (error) {
+    console.error(error);
+    return true;
+  }
+
   return result.length > 0;
 }
 
-// Funkcija, kuri tvarko vartotojo registraciją
-async function register(req, res) {
-  const { name, email, password } = req.body;
-
-  // registracijos logika čia
-  const sql = 'INSERT INTO users (name, email, password) VALUES (?, ?, ?)';
-  const [result, error] = await dbQueryWithData(sql, [name, email, password]);
-
-  if (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: 'Registration failed' });
-  } else {
-    res.json({
-      success: true,
-      message: 'User registered successfully',
-      userId: result.insertId,
-    });
-  }
-}
-
-// prisijungimo logika čia
-
-async function login(req, res) {
-  const { email, password } = req.body;
-
-  const isValid = await checkCredentials(email, password);
-
-  if (isValid) {
-    // Grąžinti sėkmingą atsakymą
-
-    res.json({
-      success: true,
-      message: 'Login successful',
-    });
-  } else {
-    // Grąžinti klaidos atsakymą dėl nepraeito prisijungimo
-
-    res.status(401).json({
-      success: false,
-      message: 'Invalid email or password',
-    });
-  }
-}
-
-// Export
-module.exports = { register, login };
+module.exports = { register };
