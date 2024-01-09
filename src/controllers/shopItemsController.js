@@ -2,10 +2,11 @@
 const { dbQueryWithData } = require('../helper');
 
 async function createShopItem(req, res) {
-  const { name, price, description, image, item_type_id } = req.body;
+  const {
+    name, price, description, image, item_type_id,
+  } = req.body;
 
-  const sql =
-    'INSERT INTO shop_items (name, price, description, image, item_type_id) VALUES (?, ?, ?, ?, ?)';
+  const sql = 'INSERT INTO shop_items (name, price, description, image, item_type_id) VALUES (?, ?, ?, ?, ?)';
   const [result, error] = await dbQueryWithData(sql, [
     name,
     price,
@@ -57,12 +58,10 @@ async function getShopItemById(req, res) {
     res
       .status(500)
       .json({ success: false, message: 'Failed to fetch shop item' });
+  } else if (result.length === 0) {
+    res.status(404).json({ success: false, message: 'Shop item not found' });
   } else {
-    if (result.length === 0) {
-      res.status(404).json({ success: false, message: 'Shop item not found' });
-    } else {
-      res.json({ success: true, shopItem: result[0] });
-    }
+    res.json({ success: true, shopItem: result[0] });
   }
 }
 
@@ -77,12 +76,10 @@ async function deleteShopItemById(req, res) {
     res
       .status(500)
       .json({ success: false, message: 'Failed to delete shop item' });
+  } else if (result.affectedRows > 0) {
+    res.json({ success: true, message: 'Shop item deleted successfully' });
   } else {
-    if (result.affectedRows > 0) {
-      res.json({ success: true, message: 'Shop item deleted successfully' });
-    } else {
-      res.status(404).json({ success: false, message: 'Shop item not found' });
-    }
+    res.status(404).json({ success: false, message: 'Shop item not found' });
   }
 }
 module.exports = {

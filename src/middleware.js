@@ -1,72 +1,39 @@
-// my own middle ware
-const logHello = (req, res, next) => {
-  console.log('--- welcome to our server ---');
-  // leidzia kodui vykti toliau
-  next();
-};
-const reqTime = (req, res, next) => {
-  const now = new Date();
-  const time = now.toTimeString();
-  console.log('request:', time);
-  // leidzia kodui vykti toliau
-  next();
-};
+// middleware.js
 
-const logBody = (req, res, next) => {
-  // patikrinti ar metodas yra POST, PUT, PATCH
-  // console.log('req.method ===', req.method);
-  // if (req.method === 'POST' || req.method === 'PUT' || req.method === 'PATCH') {
-  //   console.log('req.body ===', req.body);
-  // }
-  if (['POST', 'PUT', 'PATCH'].includes(req.method)) {
-    console.log('req.body ===', req.body);
-  }
-  // jei yra tai spausdinam body
-  // jei ne nespausdinam
+const validateFields = (requiredFields) => (req, res, next) => {
+  const missingFields = [];
+  const invalidFields = [];
 
-  // atspausdinti body
-  // console.log('req.body ===', req.body);
-  // leidzia kodui vykti toliau
-  next();
-};
+  requiredFields.forEach((field) => {
+    if (!req.body[field]) {
+      missingFields.push(field);
+    }
+  });
 
-const validatePost = (req, res, next) => {
-  const {
-    title, author, date, body,
-  } = req.body;
-  // validacija
+  // Add custom validation logic if needed
+  // Example: check if email is valid, etc.
 
-  if (title?.trim() === '' || !title) {
-    res.status(400).json({
-      type: 'validation',
-      error: 'required field',
-      field: 'title',
+  if (missingFields.length > 0 || invalidFields.length > 0) {
+    const errors = {};
+
+    if (missingFields.length > 0) {
+      errors.missingFields = missingFields;
+    }
+
+    if (invalidFields.length > 0) {
+      errors.invalidFields = invalidFields;
+    }
+
+    return res.status(400).json({
+      success: false,
+      message: 'Validation failed',
+      errors,
     });
-    return;
   }
-  if (title?.trim().length < 3) {
-    res.status(400).json({
-      type: 'validation',
-      error: 'must be 3 or more letters',
-      field: 'title',
-    });
-    return;
-  }
-  if (author?.trim() === '' || !author) {
-    res.status(400).json({
-      type: 'validation',
-      error: 'required field',
-      field: 'author',
-    });
-    return;
-  }
-  // nera klaidu, vaziuojam tolyn
+
   next();
 };
 
 module.exports = {
-  reqTime,
-  logHello,
-  logBody,
-  validatePost,
+  validateFields,
 };

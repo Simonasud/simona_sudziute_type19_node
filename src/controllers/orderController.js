@@ -2,10 +2,11 @@
 const { dbQueryWithData } = require('../helper');
 
 async function createOrder(req, res) {
-  const { user_id, shop_item_id, quantity, total_price, status } = req.body;
+  const {
+    user_id, shop_item_id, quantity, total_price, status,
+  } = req.body;
 
-  const sql =
-    'INSERT INTO orders (user_id, shop_item_id, quantity, total_price, status) VALUES (?, ?, ?, ?, ?)';
+  const sql = 'INSERT INTO orders (user_id, shop_item_id, quantity, total_price, status) VALUES (?, ?, ?, ?, ?)';
   const [result, error] = await dbQueryWithData(sql, [
     user_id,
     shop_item_id,
@@ -85,4 +86,6 @@ async function getOrdersByUserId(req, res) {
   }
 }
 
-module.exports = { createOrder, getAllOrders, getOrderById, getOrdersByUserId };
+module.exports = {
+  createOrder, getAllOrders, getOrderById, getOrdersByUserId,
+};

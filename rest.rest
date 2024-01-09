@@ -57,10 +57,14 @@ Content-Type: application/json
 GET http://localhost:3000/api/orders
 
 ### single order
-http://localhost:3000/api/orders/2
+GET http://localhost:3000/api/orders/2
 
 ### order by user
-http://localhost:3000/api/orders/user/:1
+GET http://localhost:3000/api/orders/user/1
+
+### gauti visas roles
+GET http://localhost:3000/api/user_roles
+
 
 
 

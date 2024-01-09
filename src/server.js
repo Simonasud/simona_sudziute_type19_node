@@ -7,6 +7,7 @@ const { dbConfig } = require('./config');
 const authRouter = require('./routes/authRouter');
 const shopItemsRouter = require('./routes/shopItemsRouter');
 const ordersRouter = require('./routes/ordersRouter');
+const userRolesRouter = require('./routes/userRolesRouter');
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authRouter);
 app.use('/api', shopItemsRouter);
 app.use('/api', ordersRouter);
+app.use('/api', userRolesRouter);
 
 // 404 - returns json
 app.use((req, res) => {

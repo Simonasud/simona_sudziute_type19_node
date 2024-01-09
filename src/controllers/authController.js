@@ -12,9 +12,6 @@ async function checkCredentials(email, password) {
     console.error(error);
     return false;
   }
-
-  // Jeigu vartotojas su duotu el. paštu ir slaptažodžiu egzistuoja, grąžinti true; kitu atveju, grąžinti false
-
   return result.length > 0;
 }
 
