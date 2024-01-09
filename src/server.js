@@ -18,15 +18,14 @@ app.use(express.json());
 app.use(morgan('dev'));
 app.use(cors());
 
-// Routes
 app.get('/', (req, res) => {
   res.json('Hello World');
 });
 
 app.use('/api/auth', authRouter);
-app.use('/api', shopItemsRouter);
-app.use('/api', ordersRouter);
-app.use('/api', userRolesRouter);
+app.use('/api/shop', shopItemsRouter);
+app.use('/api/orders', ordersRouter);
+app.use('/api/user-roles', userRolesRouter);
 
 // 404 - returns json
 app.use((req, res) => {

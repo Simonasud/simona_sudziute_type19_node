@@ -5,8 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>add_item</title>
     <link rel="stylesheet" href="common.css" />
-    <link rel="stylesheet" href="styles/style.css" />
+    <link rel="stylesheet" href="styles/add_iten.css" />
     <script src="js/add_item.js" defer></script>
   </head>
-  <body></body>
+  <body>
+    <div class="container">
+      <h2>Add Item</h2>
+      <form id="addItemForm">
+        <!-- Add your form fields here -->
+        <label for="name">Name:</label>
+        <input type="text" id="name" required />
+
+        <label for="price">Price:</label>
+        <input type="number" id="price" required />
+
+        <label for="description">Description:</label>
+        <textarea id="description" required></textarea>
+
+        <label for="image">Image URL:</label>
+        <input type="text" id="image" required />
+
+        <label for="itemTypeId">Item Type:</label>
+        <!-- You can populate this select input dynamically using JavaScript -->
+
+        <button type="submit">Add Item</button>
+      </form>
+    </div>
+  </body>
 </html>
