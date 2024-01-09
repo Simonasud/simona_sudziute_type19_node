@@ -4,8 +4,7 @@ const router = express.Router();
 const authController = require('../controllers/authController');
 const { register, login } = require('../controllers/authController');
 
-// Nurodykite registracijos routa
-
+// registracijos routa
 router.post('/register', authController.register);
 router.post('/register', register);
 router.post('/login', login);

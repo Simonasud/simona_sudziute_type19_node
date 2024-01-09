@@ -41,6 +41,22 @@ GET http://localhost:3000/api/shop_items/1
 ### Delete Shop Item 
 DELETE http://localhost:3000/api/shop_items/1
 
+### post orders
+POST http://localhost:3000/api/orders
+Content-Type: application/json
+
+{
+  "user_id": 1,
+  "shop_item_id": 123,
+  "quantity": 2,
+  "total_price": 30.5,
+  "status": "pending"
+}
+
+### all orders
+GET http://localhost:3000/api/orders
+
+
 
 
 
