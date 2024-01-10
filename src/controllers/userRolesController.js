@@ -1,6 +1,3 @@
-// userRolesController.js
-// controllers/userController.js
-
 const { dbQueryWithData } = require('../helper');
 
 async function createUser(req, res) {
